@@ -1,0 +1,7 @@
+description: Multiplier for the dev benefit
+metadata:
+  reference: https://example.org/simple-benefit
+
+values:
+  2025-01-01:
+    value: 2.0
