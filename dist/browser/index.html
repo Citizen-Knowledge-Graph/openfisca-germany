@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>OpenFisca Standalone Browser</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.28.0/full/pyodide.js"></script>
+</head>
+<body>
+<h2>OpenFisca Standalone Browser Demo</h2>
+<pre id="sim_code">
+from openfisca_core.simulation_builder import SimulationBuilder
+from openfisca_germany import CountryTaxBenefitSystem
+system = CountryTaxBenefitSystem()
+population = {
+    "persons": {
+        "Alice": {
+            "salary": { "2025-07": 4000 },
+            "age": { "2025-07": 30 }
+        }
+    }
+}
+sim = SimulationBuilder().build_from_entities(system, population)
+result = sim.calculate("basic_income", "2025-07")[0]
+f"Basic income for Alice in 2025-07: {result}"
+</pre>
+
+<button id="run">Run</button>
+<pre id="output" style="background: lightyellow">Click to start</pre>
+<script>
+    document.getElementById("run").onclick = async () => {
+        const out = document.getElementById("output")
+        out.textContent = "Loading Pyodide"
+        const pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.28.0/full/" })
+        out.textContent = "Preloading core packages"
+        await pyodide.loadPackage([ "micropip", "numpy", "pyyaml", "typing-extensions", "sortedcontainers", "python-dateutil", "tzdata"])
+        out.textContent = "Installing wheel"
+        let code = `
+import micropip
+await micropip.install("openfisca_browser_dist-0.1.0-py3-none-any.whl")`
+        await pyodide.runPythonAsync(code.trim())
+        out.textContent = "Running simulation"
+        code = document.getElementById("sim_code").textContent
+        const result = await pyodide.runPythonAsync(code.trim())
+        out.textContent = result
+    }
+</script>
+</body>
+</html>

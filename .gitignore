@@ -3,7 +3,8 @@
 *.egg-info
 *.pyc
 build
-dist
+dist/*
+!dist/browser
 .venv
 
 # Editors
