@@ -85,7 +85,7 @@ f"Basic income for Alice in 2025-07: {result}"
         out.textContent = "Installing wheel"
         let code = \`
 import micropip
-await micropip.install("/dist/browser/openfisca_browser_dist-0.1.0-py3-none-any.whl")\`
+await micropip.install("openfisca_browser_dist-0.1.0-py3-none-any.whl")\`
         await pyodide.runPythonAsync(code.trim())
         out.textContent = "Running simulation"
         code = document.getElementById("sim_code").textContent
