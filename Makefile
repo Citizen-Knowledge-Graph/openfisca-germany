@@ -13,7 +13,7 @@ deps:
 
 install: deps
 	@# Install OpenFisca-Extension-Template for development.
-	@# `make install` installs the editable version of openfisca-country_template.
+	@# `make install` installs the editable version of openfisca-germany.
 	@# This allows contributors to test as they code.
 	pip install --editable .[dev] --upgrade
 
@@ -22,7 +22,7 @@ build: clean deps
 	@# `make build` allows us to be be sure tests are run against the packaged version
 	@# of OpenFisca-Extension-Template, the same we put in the hands of users and reusers.
 	python -m build
-	pip uninstall --yes openfisca-country_template
+	pip uninstall --yes openfisca-germany
 	find dist -name "*.whl" -exec pip install --force-reinstall {}[dev] \;
 
 format:
@@ -39,7 +39,7 @@ lint:
 	yamllint `git ls-files | grep "\.yaml$$"`
 
 test: clean
-	openfisca test --country-package openfisca_country_template openfisca_country_template/tests
+	openfisca test --country-package openfisca_germany openfisca_germany/tests
 
 serve-local: build
-	openfisca serve --country-package openfisca_country_template
+	openfisca serve --country-package openfisca_germany
