@@ -171,8 +171,8 @@ python --version  # should print "Python 3.11.xx".
 Clone this Country Package on your machine:
 
 ```sh
-git clone git://github.com/Citizen-Knowledge-Graph/openfisca-germany.git.git
-cd openfisca-germany.git
+git clone git://github.com/Citizen-Knowledge-Graph/openfisca-germany.git
+cd openfisca-germany
 pip install --upgrade pip build twine
 pip install --editable .[dev] --upgrade
 ```
